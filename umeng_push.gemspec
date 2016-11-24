@@ -8,6 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = UmengPush::VERSION
   spec.authors       = ["zhanglinjie"]
   spec.email         = ["zhanglinjie412@gmail.com"]
+  spec.license       = "MIT"
 
   spec.summary       = "The encapsulation of umeng push api."
   spec.description   = spec.summary

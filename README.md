@@ -19,13 +19,18 @@ Or install it yourself as:
     $ gem install umeng_push
 
 ## Usage
-1. rails generate umeng_push:install
-2. UmengPush::Subject.new('ios', options).push  #or upload check cancel
-3. options 示例： {'task_id': 'xxxxx'}
-4. 推送相关options参数请参看官方文档， check 与 cancel 只需要 task_id参数, upload 只需要content 参数
-5. 返回结果失败 则抛出错误UmengPush::ResponseError
-6. 拓展或自定义功能请自行拓展
-7. 默认请求超时是3秒
+rails generate umeng_push:install
+UmengPush::Client.iOS.send_message(options)
+UmengPush::Client.android.send_message(options)
+UmengPush::Client.iOS.unicast(device_token, options)
+UmengPush::Client.iOS.listcast(device_tokens, options)
+UmengPush::Client.iOS.broadcast(options)
+UmengPush::Client.iOS.groupcast(filter, options)
+UmengPush::Client.iOS.check_task(task_id)
+UmengPush::Client.iOS.cancel_task(task_id)
+推送相关options参数请参看官方文档
+返回结果失败 则抛出错误UmengPush::ResponseError
+默认请求超时是3秒
 
 ## Development
 

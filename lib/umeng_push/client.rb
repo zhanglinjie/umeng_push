@@ -33,7 +33,7 @@ module UmengPush
     # 消息发送
     def send_message(params={})
       post("/api/send", params.merge({
-          apikey: apikey,
+          appkey: appkey,
           timestamp: timestamp,
           production_mode: production_mode
         }))
@@ -44,7 +44,7 @@ module UmengPush
       send_message(params.merge({
           type: "unicast",
           device_tokens: device_token
-        })
+        }))
     end
 
     # 组播
@@ -52,14 +52,14 @@ module UmengPush
       send_message(params.merge({
           type: "listcast",
           device_tokens: device_tokens.join(",")
-        })
+        }))
     end
 
     # 广播
     def broadcast(params={})
       send_message(params.merge({
           type: "broadcast"
-        })
+        }))
     end
 
     # 组播
@@ -67,7 +67,7 @@ module UmengPush
       send_message(params.merge({
           type: "groupcast",
           filter: filter
-        })
+        }))
     end
 
     # 查询任务
@@ -92,7 +92,7 @@ module UmengPush
     def post(url, payload)
       params = compact_params(payload)
       sign = sign(url, params)
-      response
+      response = nil
       begin
         request = HTTPI::Request.new
         request.url = "#{UmengPush::HOST}#{url}?sign=#{sign}"
@@ -123,7 +123,7 @@ module UmengPush
     end
 
     def compact_params(params)
-      custom_compact = Proc.new { |k, v| v.delete_if(&custom_compact) if v.kind_of?(Hash);  v.blank? }
+      custom_compact = Proc.new { |k, v| v.delete_if(&custom_compact) if v.kind_of?(Hash);  v.nil? }
       params.delete_if &custom_compact
     end
   end
