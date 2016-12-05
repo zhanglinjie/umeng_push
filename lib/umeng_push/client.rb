@@ -93,16 +93,12 @@ module UmengPush
       params = compact_params(payload)
       sign = sign(url, params)
       response = nil
-      begin
-        request = HTTPI::Request.new
-        request.url = "#{UmengPush::HOST}#{url}?sign=#{sign}"
-        request.open_timeout = 3
-        request.read_timeout = 3
-        request.body = params.to_json
-        response = HTTPI.post(request)
-      rescue => e
-        raise ResponseError.new("0", data: {}, message: e.message)
-      end
+      request = HTTPI::Request.new
+      request.url = "#{UmengPush::HOST}#{url}?sign=#{sign}"
+      request.open_timeout = 5
+      request.read_timeout = 5
+      request.body = params.to_json
+      response = HTTPI.post(request)
       response_body_json = JSON.load(response.body)
       check_response!(response_body_json)
       response_body_json
